@@ -4,5 +4,5 @@ import retrofit2.http.GET
 
 interface NotificationApi {
     @GET("localalerts.php")
-    suspend fun getNotifications(): NotificationListDto
+    suspend fun getNotifications(): XmlRoot
 }

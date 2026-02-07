@@ -14,11 +14,14 @@ data class NotificationDto(
 @Serializable
 @XmlSerialName("notifications", "", "")
 data class NotificationListDto(
-    val notifications: List<NotificationDto>
+    @XmlElement(true)
+    val notification: List<NotificationDto>
 )
 
 @Serializable
 @XmlSerialName("xml", "", "")
 data class XmlRoot(
+    @XmlSerialName("encoding", "", "")
+    val encoding: String? = null,
     val notifications: NotificationListDto
 )

@@ -10,7 +10,7 @@ class NotificationRepository @Inject constructor(
     private val scheduler: AlarmScheduler
 ) {
     suspend fun fetchAndSchedule(): List<NotificationDto> {
-        val response = api.getNotifications().notifications
+        val response = api.getNotifications().notifications.notification
         response.forEach { scheduler.schedule(it) }
         return response
     }

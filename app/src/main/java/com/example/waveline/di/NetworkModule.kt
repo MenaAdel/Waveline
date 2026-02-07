@@ -11,6 +11,8 @@ import dagger.hilt.components.SingletonComponent
 import nl.adaptivity.xmlutil.XmlDeclMode
 import nl.adaptivity.xmlutil.serialization.XML
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Singleton
@@ -34,8 +36,16 @@ object NetworkModule {
     fun provideRetrofit(xml: XML): NotificationApi {
         val contentType = "application/xml".toMediaType()
         return Retrofit.Builder()
-            .baseUrl("http://lynxapp.com/")
+            .baseUrl("https://lynxapp.com/")
             .addConverterFactory(xml.asConverterFactory(contentType))
+            .client(
+                OkHttpClient
+                    .Builder()
+                    .addInterceptor(HttpLoggingInterceptor().apply {
+                        this.level = HttpLoggingInterceptor.Level.BODY
+                    })
+                    .build()
+            )
             .build()
             .create(NotificationApi::class.java)
     }

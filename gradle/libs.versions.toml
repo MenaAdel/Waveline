@@ -41,11 +41,10 @@ ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devto
 hilt-compose-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltComposeNavigation" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-# Retrofit + TikXml
+# Retrofit
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
-serialization-xml = { group = "io.github.pdvrieze.xmlutil", name = "serialization-jvm", version.ref = "serializationXml" }
-serialization-xml-android = { group = "io.github.pdvrieze.xmlutil", name = "serialization-android", version.ref = "serializationXml" }
+serialization-xml = { group = "io.github.pdvrieze.xmlutil", name = "serialization-android", version.ref = "serializationXml" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }

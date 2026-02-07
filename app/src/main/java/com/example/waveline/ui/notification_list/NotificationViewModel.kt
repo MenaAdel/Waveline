@@ -1,5 +1,6 @@
 package com.example.waveline.ui.notification_list
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.waveline.data.remote.NotificationDto
@@ -23,8 +24,11 @@ class NotificationViewModel @Inject constructor(
         viewModelScope.launch {
             isLoading.value = true
             try {
-                _uiState.value = repository.fetchAndSchedule()
-            } catch (e: Exception) { /* Handle error */ }
+                val response = repository.fetchAndSchedule()
+                _uiState.value = response
+            } catch (e: Exception) {
+                Log.e("error" ,e.message.toString())
+            }
             isLoading.value = false
         }
     }
