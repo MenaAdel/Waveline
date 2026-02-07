@@ -3,13 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt.android)
+
 }
 
 android {
     namespace = "com.example.waveline"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.waveline"
@@ -37,14 +37,6 @@ android {
     buildFeatures {
         compose = true
     }
-    sourceSets {
-        getByName("main") {
-            java.srcDir("build/generated/ksp/main/kotlin")
-        }
-        getByName("debug") {
-            java.srcDir("build/generated/ksp/debug/kotlin")
-        }
-    }
 
 }
 
@@ -67,9 +59,6 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-    compileOnly(libs.ksp.gradlePlugin)
-
-    implementation(libs.hilt.compose.navigation)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 

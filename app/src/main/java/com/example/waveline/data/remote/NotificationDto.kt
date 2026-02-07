@@ -3,7 +3,6 @@ package com.example.waveline.data.remote
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
-@file:OptIn(kotlinx.serialization.InternalSerializationApi::class)
 @Serializable
 @XmlSerialName("notification", "", "")
 data class NotificationDto(
