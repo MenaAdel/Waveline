@@ -42,10 +42,15 @@ class DetailActivity : ComponentActivity() {
         notification = jsonString?.let { Json.decodeFromString<NotificationDto>(it) }
 
         setContent {
-            DetailScreen(
-                title = notification?.title ?: "Unknown",
-                onScheduleClick = { scheduleNotification() }
-            )
+            notification?.let {
+                DetailScreen(
+                    notification = it,
+                    onScheduleClick = { scheduleNotification() },
+                    onCancel = { id ->
+                        scheduler.cancel(id)
+                    }
+                )
+            }
         }
 
         checkNotificationPermission()

@@ -21,7 +21,7 @@
         <activity
             android:name=".ui.details.DetailActivity"
             android:exported="false"
-            android:theme="@style/Theme.WavelineWithBar"/>
+            android:theme="@style/Theme.Waveline"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
