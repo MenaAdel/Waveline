@@ -15,5 +15,5 @@ class NotificationRepository @Inject constructor(
         return response
     }
 
-    fun cancelAll() = scheduler.cancelAll()
+    fun cancelAllScheduled(value: List<NotificationDto>) = scheduler.cancelAllScheduled(value)
 }

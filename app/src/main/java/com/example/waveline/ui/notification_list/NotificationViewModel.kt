@@ -33,5 +33,5 @@ class NotificationViewModel @Inject constructor(
         }
     }
 
-    fun cancelAll() = repository.cancelAll()
+    fun cancelAll() = repository.cancelAllScheduled(_uiState.value)
 }

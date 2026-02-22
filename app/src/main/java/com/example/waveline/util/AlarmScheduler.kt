@@ -22,10 +22,24 @@ class AlarmScheduler(private val context: Context) {
         val triggerAt = System.currentTimeMillis() + (item.timeInSeconds * 1000)
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent)
     }
-
-    fun cancelAll() {
+    fun cancelAllScheduled(notifications: List<NotificationDto>) {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancelAll()
+
+        notifications.forEach { item ->
+            val intent = Intent(context, NotificationReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                item.id,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_NO_CREATE
+            )
+
+            if (pendingIntent != null) {
+                alarmManager.cancel(pendingIntent)
+                pendingIntent.cancel()
+            }
+        }
     }
 
     fun cancel(notificationId: Int) {
