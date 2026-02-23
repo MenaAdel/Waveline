@@ -22,6 +22,7 @@ class NotificationReceiver : BroadcastReceiver() {
             .setContentTitle("Scheduled Alert")
             .setContentText(title)
             .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .build()
 

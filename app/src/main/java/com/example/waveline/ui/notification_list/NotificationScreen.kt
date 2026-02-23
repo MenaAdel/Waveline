@@ -17,12 +17,17 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.waveline.data.remote.NotificationDto
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,17 +39,25 @@ fun NotificationScreen(
     val items by viewModel.uiState.collectAsState()
     val loading by viewModel.isLoading.collectAsState()
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(Unit) {
+        viewModel.loadData()
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                viewModel.loadData()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
     Scaffold(
-        /*topBar = {
-            TopAppBar(
-                title = { Text("Notifications") },
-                actions = {
-                    TextButton(onClick = { viewModel.cancelAll() }) {
-                        Text("CANCEL ALL", color = MaterialTheme.colorScheme.onPrimary)
-                    }
-                }
-            )
-        }*/
         topBar = {
             TopAppBar(
                 title = {
@@ -54,12 +67,11 @@ fun NotificationScreen(
                     )
                 },
                 actions = {
-                    // M3 prefers TextButtons or IconButtons in the TopBar
                     TextButton(onClick = { viewModel.cancelAll() }) {
                         Text(
                             "CANCEL ALL",
                             style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.primary // Use Theme color, not onPrimary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
