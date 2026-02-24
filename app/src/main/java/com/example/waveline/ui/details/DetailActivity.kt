@@ -102,7 +102,6 @@ class DetailActivity : ComponentActivity() {
         }
 
         notification?.let {
-            scheduler.schedule(it)
             showConfirmationDialog()
         }
     }
@@ -122,9 +121,12 @@ class DetailActivity : ComponentActivity() {
 
     private fun showConfirmationDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Success")
-            .setMessage("Notification '${notification?.title}' has been scheduled!")
-            .setPositiveButton("OK", null)
+            .setTitle("Scheduling Notification")
+            .setMessage("Your notification will be scheduled for ${notification?.timeInSeconds} seconds!")
+            .setPositiveButton("OK") { _, _ ->
+                scheduler.schedule(notification!!)
+                showToast("Notification Scheduled")
+            }
             .show()
     }
 

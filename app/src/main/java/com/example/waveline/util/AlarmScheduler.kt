@@ -43,13 +43,16 @@ class AlarmScheduler(private val context: Context) {
     }
 
     fun cancel(notificationId: Int) {
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancelAll()
+
         val intent = Intent(context, NotificationReceiver::class.java)
 
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             notificationId,
             intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_NO_CREATE
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         if (pendingIntent != null) {
